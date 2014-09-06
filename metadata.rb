@@ -4,7 +4,7 @@ maintainer_email 'jbingham@gmail.com'
 license          'Apache 2.0'
 description      'Installs/Configures shovey-jobs'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '0.0.2'
+version          '0.0.3'
 depends "serf"
 depends "golang"
 supports "debian"
@@ -76,6 +76,11 @@ attribute "schob/run_timeout",
   :display_name => "schob run timeout",
   :description => "How long to wait, in minutes, before killing a shovey job that's running. Defaults to 45 minutes.",
   :default => "45"
+
+attribute "schob/time_slew",
+  :display_name => "schob time slew",
+  :description => "Time difference allowed between the node's clock and the time sent in the serf command from the server.  Formatted like 5m, 150s, etc. Defaults to 15m.",
+  :default => "15m"
 
 attribute "schob/whitelist",
   :display_name => "schob whitelist",

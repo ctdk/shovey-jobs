@@ -66,6 +66,10 @@ Attributes
  it will replay this file and send reports back to goiardi that some jobs did
  not complete because the client died.
 
+`node["schob"]["time_slew"]` Time difference allowed between the node's clock 
+ and the time sent in the serf command from the server.  Formatted like 5m, 
+ 150s, etc. Defaults to 15m.
+
 Usage
 -----
 #### shovey-jobs::default

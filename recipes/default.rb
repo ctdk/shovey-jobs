@@ -77,7 +77,8 @@ template "/etc/schob/schob.conf" do
     :shovey_pem => "/etc/schob/shovey.pem",
     :run_timeout => node['schob']['run_timeout'],
     :serf_addr => node['schob']['serf_addr'],
-    :queue_save_file => node['schob']['queue_save_file']
+    :queue_save_file => node['schob']['queue_save_file'],
+    :time_slew => node['schob']['time_slew']
   )
   notifies :restart, resources(:service => "schob")
 end

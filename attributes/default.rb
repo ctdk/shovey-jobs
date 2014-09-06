@@ -10,3 +10,4 @@ default["schob"]["serf_addr"] = "127.0.0.1:7373"
 default["schob"]["client_key"] = "/etc/chef/client.pem"
 default["schob"]["run_timeout"] = 45
 default["schob"]["whitelist"] = { "chef-client" => "chef-client" }
+default["schob"]["time_slew"] = "15m"
