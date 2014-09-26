@@ -22,7 +22,7 @@
 PATH=/opt/go/bin:/sbin:/usr/sbin:/bin:/usr/bin
 DESC="Runs shovey jobs from the remote goiardi server"
 NAME=schob
-DAEMON=<%= @schob_path %>/$NAME
+DAEMON=<%= @schob_path %>
 DAEMON_ARGS="-c /etc/schob/schob.conf"
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME

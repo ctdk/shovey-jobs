@@ -1,4 +1,4 @@
-default["schob"]["path"] = "/opt/go/bin"
+default["schob"]["path"] = "/opt/go/bin/schob"
 default["schob"]["package"] = "github.com/ctdk/schob"
 default["schob"]["log_dir"] = "/var/log/schob"
 default["schob"]["log_file"] = "/var/log/schob/schob.log"
