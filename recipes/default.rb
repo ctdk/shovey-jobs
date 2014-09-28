@@ -37,8 +37,44 @@ directory node['schob']['log_dir'] do
   action :create
 end
 
-template "/etc/init.d/schob" do
-  source "schob-init.erb"
+init_location = nil
+init_source = nil
+do_restart = false
+
+case node.platform
+when "fedora", "arch"
+  init_location = "/lib/systemd/system/schob.service"
+  init_source = "schob.service.erb"
+  do_restart = true
+when "mac_os_x"
+  init_location = "/Library/LaunchDaemons/schob.plist"
+  init_source = "schob.plist.erb"
+when "ubuntu"
+  init_location = "/etc/init/schob.conf"
+  init_source = "schob.conf-upstart-1.5.erb"
+when "centos"
+  case node.platform_version.to_i
+  when 7
+    init_location = "/lib/systemd/system/schob.service"
+    init_source = "schob.service.erb"
+    do_restart = true
+  when 6
+    init_location = "/etc/init/schob.conf"
+    init_source = "goiardi.conf-upstart-0.6.5.erb"
+  else
+    init_location = "/etc/init.d/schob"
+    init_source = "schob-sysv-init.erb"
+    do_restart = true
+  end
+else
+  # current Debians, maybe Solaris?
+  init_location = "/etc/init.d/schob"
+  init_source = "schob-sysv-init.erb"
+  do_restart = true
+end
+
+template init_location do
+  source init_source
   owner "root"
   group "root"
   mode "0755"
@@ -47,9 +83,17 @@ template "/etc/init.d/schob" do
   )
 end
 
+cookbook_file "/etc/default/schob" do
+  source "schob"
+  owner "root"
+  group "root"
+  mode "0644"
+  only_if { init_location == "/etc/init.d/schob" }
+end
+
 service "schob" do 
   service_name "schob"
-  supports :restart => true, :reload => true
+  supports :restart => true, :reload => do_restart
   action [:enable, :start]
 end
 

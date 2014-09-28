@@ -1,0 +1,13 @@
+[Unit]
+Description=no description given
+ 
+[Service]
+Type=simple
+User=root
+Group=root
+ExecStart=<%= @schob_path %> "-c" "/etc/schob/schob.conf"
+ExecReload=kill -HUP $MAINPID
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
