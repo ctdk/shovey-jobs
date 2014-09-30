@@ -105,12 +105,12 @@ force_stop() {
 
 
 reload() {
-  kill -HUP `cat $pidfile`
+  kill -HUP `cat "$pidfile"`
   return 0
 }
 
 case "$1" in
-  force-start|start|stop|force-stop|restart)
+  force-start|start|stop|force-stop|restart|reload)
     trace "Attempting '$1' on schob"
     ;;
 esac

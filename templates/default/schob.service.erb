@@ -6,7 +6,7 @@ Type=simple
 User=root
 Group=root
 ExecStart=<%= @schob_path %> "-c" "/etc/schob/schob.conf"
-ExecReload=kill -HUP $MAINPID
+ExecReload=/bin/kill -HUP $MAINPID
 Restart=always
 
 [Install]

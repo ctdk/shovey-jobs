@@ -39,13 +39,13 @@ end
 
 init_location = nil
 init_source = nil
-do_restart = false
+do_reload = false
 
 case node.platform
 when "fedora", "arch"
   init_location = "/lib/systemd/system/schob.service"
   init_source = "schob.service.erb"
-  do_restart = true
+  do_reload = true
 when "mac_os_x"
   init_location = "/Library/LaunchDaemons/schob.plist"
   init_source = "schob.plist.erb"
@@ -57,20 +57,20 @@ when "centos"
   when 7
     init_location = "/lib/systemd/system/schob.service"
     init_source = "schob.service.erb"
-    do_restart = true
+    do_reload = true
   when 6
     init_location = "/etc/init/schob.conf"
     init_source = "goiardi.conf-upstart-0.6.5.erb"
   else
     init_location = "/etc/init.d/schob"
     init_source = "schob-sysv-init.erb"
-    do_restart = true
+    do_reload = true
   end
 else
   # current Debians, maybe Solaris?
   init_location = "/etc/init.d/schob"
   init_source = "schob-sysv-init.erb"
-  do_restart = true
+  do_reload = true
 end
 
 template init_location do
@@ -93,8 +93,8 @@ end
 
 service "schob" do 
   service_name "schob"
-  supports :restart => true, :reload => do_restart
-  action [:enable, :start]
+  supports :restart => true, :reload => do_reload
+  #action [:enable, :start]
 end
 
 pem_content = Chef::EncryptedDataBagItem.load(node['schob']['pem_databag'], node['schob']['pem_server'])['key']
@@ -104,6 +104,17 @@ file "/etc/schob/shovey.pem" do
   group "root"
   mode "0600"
   content pem_content
+end
+
+whitelist = {}
+whitelist["whitelist"] = node["schob"]["whitelist"]
+notify_reload = (do_reload) ? :reload : :restart
+file "/etc/schob/whitelist.json" do
+  owner "root"
+  group "root"
+  mode "0600"
+  content whitelist.to_json
+  notifies notify_reload, resources(:service => "schob")
 end
 
 template "/etc/schob/schob.conf" do
@@ -127,13 +138,8 @@ template "/etc/schob/schob.conf" do
   notifies :restart, resources(:service => "schob")
 end
 
-whitelist = {}
-whitelist["whitelist"] = node["schob"]["whitelist"]
-file "/etc/schob/whitelist.json" do
-  owner "root"
-  group "root"
-  mode "0600"
-  content whitelist.to_json
-  notifies :reload, resources(:service => "schob")
-end
 
+# hmm
+service "schob" do
+  action [ :enable, :start ]
+end
