@@ -1,2 +1,4 @@
 .swp
 .*.swp
+.kitchen/
+.kitchen.local.yml
