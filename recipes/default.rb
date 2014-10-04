@@ -18,6 +18,7 @@
 #
 
 include_recipe 'golang'
+include_recipe 'serf'
 
 golang_package node['schob']['package'] do
   action :install

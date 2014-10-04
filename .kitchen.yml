@@ -12,5 +12,7 @@ platforms:
 suites:
   - name: default
     run_list:
+      - recipe[golang]
+      - recipe[serf]
       - recipe[shovey-jobs::default]
     attributes:
