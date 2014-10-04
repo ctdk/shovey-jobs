@@ -61,7 +61,7 @@ when "centos"
     do_reload = true
   when 6
     init_location = "/etc/init/schob.conf"
-    init_source = "goiardi.conf-upstart-0.6.5.erb"
+    init_source = "schob.conf-upstart-0.6.5.erb"
   else
     init_location = "/etc/init.d/schob"
     init_source = "schob-sysv-init.erb"
