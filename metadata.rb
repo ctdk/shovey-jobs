@@ -1,6 +1,6 @@
 name             'shovey-jobs'
 maintainer       'Jeremy Bingham'
-maintainer_email 'jbingham@gmail.com'
+maintainer_email 'jeremy@goiardi.gl'
 license          'Apache 2.0'
 description      'Installs/Configures shovey-jobs'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))

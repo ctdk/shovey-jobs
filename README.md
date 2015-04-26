@@ -138,4 +138,4 @@ Contributing
 
 License and Authors
 -------------------
-Author: Jeremy Bingham <jbingham@gmail.com>
+Author: Jeremy Bingham <jeremy@goiardi.gl>
