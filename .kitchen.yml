@@ -3,7 +3,7 @@ driver:
   name: vagrant
 
 provisioner:
-  name: chef_solo
+  name: chef_zero
   encrypted_data_bag_secret_key_path: test/encrypted_data_bag_secret
   data_bags_path: test/data_bags
 

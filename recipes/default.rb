@@ -41,6 +41,7 @@ end
 init_location = nil
 init_source = nil
 do_reload = false
+do_link = false
 
 case node.platform
 when "fedora", "arch"
@@ -53,6 +54,7 @@ when "mac_os_x"
 when "ubuntu"
   init_location = "/etc/init/schob.conf"
   init_source = "schob.conf-upstart-1.5.erb"
+  do_link = true
 when "centos"
   case node.platform_version.to_i
   when 7
@@ -62,6 +64,7 @@ when "centos"
   when 6
     init_location = "/etc/init/schob.conf"
     init_source = "schob.conf-upstart-0.6.5.erb"
+    do_link = true
   else
     init_location = "/etc/init.d/schob"
     init_source = "schob-sysv-init.erb"
@@ -82,6 +85,11 @@ template init_location do
   variables(
     :schob_path => node['schob']['path']
   )
+end
+
+link "/etc/init.d/schob" do
+  to "/lib/init/upstart-job"
+  only_if { do_link }
 end
 
 cookbook_file "/etc/default/schob" do
