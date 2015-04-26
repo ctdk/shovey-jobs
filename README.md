@@ -7,9 +7,8 @@ installing shovey as a preview.
 
 Requirements
 ------------
-Requires goiardi of recent enough vintage that it has shovey. Currently that
-means the tip of the 'serfing' branch in the github repo. As of this writing,
-only the in-memory data store works with shovey.
+Requires goiardi of recent enough vintage that it has shovey, which is any 
+version since 0.8.0. The latest version is, of course, recommended.
 
 Also, to actually issue shovey jobs the knife-shove plugin (at 
 https://github.com/ctdk/knife-shove) is required on the workstation you'll be
