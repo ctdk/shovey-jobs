@@ -17,12 +17,7 @@
 # limitations under the License.
 #
 
-include_recipe 'golang'
 include_recipe 'serf'
-
-golang_package node['schob']['package'] do
-  action :install
-end
 
 directory "/etc/schob" do
   owner "root"
